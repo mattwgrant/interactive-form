@@ -51,11 +51,28 @@ design.addEventListener('change', () => {
 	// otherwise is should display the drop down options from color
 	// if it is displaying a color, it should only display the colors
 	// available for the specific shirt design
-	const color = document.querySelector('#color');
+	let color = document.querySelector('#color');
+	// let cornflowerblue = document.querySelector('option[value="cornflowerblue"]');
+	// let darkslategrey = document.querySelector('option[value="darkslategrey"]');
+	// let gold = document.querySelector('option[value="gold"]');
+	// let tomato = document.querySelector('option[value="tomato"]');
+	// let steelblue = document.querySelector('option[value="steelblue"]');
+	// let dimgrey = document.querySelector('option[value="dimgrey"]');
+	
 	if ( design.value === 'Select Theme' ) {
+		// color.hidden = true;
+		color.innerHTML = '<option value="Please select a T-shirt theme"</option>';
+	} else if ( design.value === 'js puns' ) {
+		color.innerHTML = `<option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>`;
+		color.innerHTML += `<option value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option>`;
+		color.innerHTML += `<option value="gold">Gold (JS Puns shirt only)</option>`;
 
+	} else if ( design.value === 'heart js' ){
+		color.innerHTML = `<option value="tomato">Tomato (I &#9829; JS shirt only)</option>`;
+		color.innerHTML += `<option value="steelblue">Steel Blue (I &#9829; JS shirt only)</option> `;
+		color.innerHTML += `<option value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option>`;
 	} else {
-
+		color.innerHTML = 'Hi';
 	}
 }); 
 
