@@ -25,10 +25,12 @@ function hideInput() {
 		and removes the otherInput so that it does not display if JS
 		is working but allows the field to display if JS is not working
 	***/
-	fieldSet.removeChild(input);
-};
+	window.addEventListener('load', () => { 
+		fieldSet.removeChild(input);
+	});
+}
 // This calls it so that the function runs automatically to hide the element
-hideInput();
+// hideInput();
 
 
 // /***
@@ -60,16 +62,16 @@ hideInput();
 function showInput() {
 	let select = document.querySelector('select');
 	let other = document.querySelector('option[value="other"]');
-	let fieldSet = document.querySelector('fieldset');
-	let input = document.querySelector('#other-title');
 	select.addEventListener('change', (e) => {
-		if ( fieldSet.option.value === 'other') {
+		if ( select.value === 'other') {
+			let fieldSet = document.querySelector('fieldset');
+			let input = document.querySelector('#other-title');
 			fieldSet.appendChild(input);
 		} else {
 			hideInput();
 		}
 
-	})
+	});
 };
 
 
