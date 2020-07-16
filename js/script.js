@@ -1,12 +1,13 @@
 /*** 
-		This function selects the input with the ID of name
-		and puts the focus there so that the user can start 
-		typing their name as soon as the page loads, without
-		having to manually go to the field
-	***/
+	This function selects the input with the ID of name
+	and puts the focus there so that the user can start 
+	typing their name as soon as the page loads, without
+	having to manually go to the field
+***/
+
 function focus() {
 	document.getElementById('name').focus();
-}
+};
 focus();
 
 /***
@@ -25,7 +26,7 @@ function hideOtherInput() {
 		is working but allows the field to display if JS is not working
 	***/
 	fieldSet.removeChild(otherInput);
-}
+};
 // This calls it so that the function runs automatically to hide the element
 hideOtherInput();
 
@@ -42,7 +43,7 @@ function createInput() {
 	let otherInput = document.createElement('INPUT');
 	// here I assign it an ID of other title
 	otherInput.id = 'other-title';
-	// this sets its type to tex
+	// this sets its type to text
 	otherInput.type = 'text';
 	// this gives it a placeholder value
 	otherInput.placeholder = 'Your Job Role';
@@ -61,8 +62,9 @@ function showOtherInput() {
 	// let other = document.querySelector('option[value="other"]');
 	if ( select.value === 'other' ) {
 		createInput();
-	} 
+	}
 };
+
 
 
 
