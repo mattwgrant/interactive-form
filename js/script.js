@@ -26,7 +26,7 @@ function hideInput() {
 		is working but allows the field to display if JS is not working
 	***/
 	window.addEventListener('load', () => { 
-		fieldSet.removeChild(input);
+		fieldSet.input.isHidden() = true;
 	});
 }
 // This calls it so that the function runs automatically to hide the element
@@ -66,7 +66,7 @@ function showInput() {
 		if ( select.value === 'other') {
 			let fieldSet = document.querySelector('fieldset');
 			let input = document.querySelector('#other-title');
-			fieldSet.appendChild(input);
+			input.isHidden() = false;
 		} else {
 			hideInput();
 		}
