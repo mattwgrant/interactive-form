@@ -1,6 +1,7 @@
 // Global variables
 const title = document.querySelector('#title');
 const design = document.querySelector('#design');
+let color = document.querySelector('#color');
 
 /*** 
 	This function selects the input with the ID of name
@@ -24,6 +25,17 @@ window.addEventListener('load', () => {
 });
 
 /***
+	This listener sets the default drop down selection on load to 
+	say 'Please select a T-shirt design' as no style is selected 
+	on page load
+***/
+
+window.addEventListener('load', () => { 
+	color.innerHTML = '<option>Please select a T-shirt theme</option>';
+	
+});
+
+/***
 	This function hides and shows the input depending on if 
 	'other' was selected from the Job Role drop down
 ***/
@@ -42,37 +54,40 @@ title.addEventListener('change', () => {
 		// instead, the field is hidden again by setting the value of 'hidden' to 'true'
 		other.hidden = true;
 	}
-
 });
 
+/***
+	This function changes the color options for the t-shirts depending on what 
+	shirt design is chosen. The event listener is looking for a change to the design 
+	option menu and triggers further events based off of this.
+***/
+
 design.addEventListener('change', () => {
-	// if design.option.value = 'Select Theme'
-	// then color should display a message that says 'Please select a T-shirt theme';
-	// otherwise is should display the drop down options from color
-	// if it is displaying a color, it should only display the colors
-	// available for the specific shirt design
-	let color = document.querySelector('#color');
-	// let cornflowerblue = document.querySelector('option[value="cornflowerblue"]');
-	// let darkslategrey = document.querySelector('option[value="darkslategrey"]');
-	// let gold = document.querySelector('option[value="gold"]');
-	// let tomato = document.querySelector('option[value="tomato"]');
-	// let steelblue = document.querySelector('option[value="steelblue"]');
-	// let dimgrey = document.querySelector('option[value="dimgrey"]');
-	
-	if ( design.value === 'Select Theme' ) {
-		// color.hidden = true;
-		color.innerHTML = '<option value="Please select a T-shirt theme"</option>';
-	} else if ( design.value === 'js puns' ) {
+
+	// If the value of design matches 'js puns', the inner HTML changes to 
+	// display the color for that shirt design and will not display any other
+	// color options. The different colors are all placed together by appending 
+	// each one to the next
+
+	if ( design.value === 'js puns' ) {
 		color.innerHTML = `<option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>`;
 		color.innerHTML += `<option value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option>`;
 		color.innerHTML += `<option value="gold">Gold (JS Puns shirt only)</option>`;
 
-	} else if ( design.value === 'heart js' ){
+		// This works the same way as the previous option but with the 'heart js' shirt
+
+	} else if ( design.value === 'heart js' ) {
 		color.innerHTML = `<option value="tomato">Tomato (I &#9829; JS shirt only)</option>`;
 		color.innerHTML += `<option value="steelblue">Steel Blue (I &#9829; JS shirt only)</option> `;
 		color.innerHTML += `<option value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option>`;
+		
+		// Determines if the value is equal to 'Select Theme' and if it is,
+		// changes the inner HTML of the drop down to read 'Please select a T-shirt 
+		// theme'. Though I have this set on page load, if the customer changes back to
+		// this option it needs to be able to change again
+
 	} else {
-		color.innerHTML = 'Hi';
+		color.innerHTML = '<option>Please select a T-shirt theme</option>';
 	}
 }); 
 
