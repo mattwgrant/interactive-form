@@ -1,3 +1,7 @@
+// Global variables
+const title = document.querySelector('#title');
+const design = document.querySelector('#design');
+
 /*** 
 	This function selects the input with the ID of name
 	and puts the focus there so that the user can start 
@@ -5,74 +9,56 @@
 	having to manually go to the field
 ***/
 
-function focus() {
-	document.getElementById('name').focus();
-};
-focus();
+document.getElementById('name').focus();
 
 /***
-	This function hides the HTML input field that will display
-	if the customer selects 'other' as a job role.
+	This listener uses querySelector to get the input
+	element that is only to be present if 'Other' is
+	selected from the Job Role dropdown and set it to
+	be hidden when the page loads
 ***/
 
-function hideInput() {
-	// This variable selects the first fieldset element
-	let fieldSet = document.querySelector('fieldset');
-	// This element selects the text input
-	let input = document.querySelector('#other-title');
-	/***
-		This calls remove child on the fieldSet variable
-		and removes the otherInput so that it does not display if JS
-		is working but allows the field to display if JS is not working
-	***/
-	window.addEventListener('load', () => { 
-		fieldSet.input.isHidden() = true;
-	});
-}
-// This calls it so that the function runs automatically to hide the element
-// hideInput();
-
-
-// /***
-// 	This function creates the text input field for the 'Other'
-// 	job role
-// ***/
-
-// function createInput() {
-// 	// this variable selects the first fieldset element
-// 	let title = document.querySelector('fieldset');
-// 	// this creates the text input for the other job role
-// 	let otherInput = document.createElement('INPUT');
-// 	// here I assign it an ID of other title
-// 	otherInput.id = 'other-title';
-// 	// this sets its type to text
-// 	otherInput.type = 'text';
-// 	// this gives it a placeholder value
-// 	otherInput.placeholder = 'Your Job Role';
-// 	// this appends it to the end of the fieldset taht was selected
-// 	title.appendChild(otherInput);
-// };
-
+window.addEventListener('load', () => { 
+	document.querySelector('#other-title').hidden = true;
+	
+});
 
 /***
-	This function calls createInput if the 'Other' job role is 
-	selected
+	This function hides and shows the input depending on if 
+	'other' was selected from the Job Role drop down
 ***/
 
-function showInput() {
-	let select = document.querySelector('select');
-	let other = document.querySelector('option[value="other"]');
-	select.addEventListener('change', (e) => {
-		if ( select.value === 'other') {
-			let fieldSet = document.querySelector('fieldset');
-			let input = document.querySelector('#other-title');
-			input.isHidden() = false;
-		} else {
-			hideInput();
-		}
+// This line use query selector to target the select element with the id of title
+title.addEventListener('change', () => {
+	// Set a variable for the input field with an ID of 'other-title'
+	let other = document.querySelector('#other-title');
+	// The conditional is used to determine if 'other' is the value of the select element
+	if ( title.value === 'other') {
+		// If 'other' was selected, the hidden value is changed to false, 
+		// thereby displaying the input
+		other.hidden = false;
+	} else {
+		// If 'other' is not selected, or if it is and then the user selects another
+		// instead, the field is hidden again by setting the value of 'hidden' to 'true'
+		other.hidden = true;
+	}
 
-	});
-};
+});
+
+design.addEventListener('change', () => {
+	// if design.option.value = 'Select Theme'
+	// then color should display a message that says 'Please select a T-shirt theme';
+	// otherwise is should display the drop down options from color
+	// if it is displaying a color, it should only display the colors
+	// available for the specific shirt design
+	const color = document.querySelector('#color');
+	if ( design.value === 'Select Theme' ) {
+
+	} else {
+
+	}
+}); 
+
 
 
 
