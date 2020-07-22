@@ -108,7 +108,11 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 	// A for loop is used to run through all occurences of the checkboxes variable
 
 	for ( let i = 0; i < checkboxes.length; i++ ) {
-		let typeOfCheckbox = checkboxes[i].getAttribute('data-day-and-time');
+
+		// This gets the 'data-day-and-time' of all elements that are defined
+		// in the checkboxes variable
+
+		let typeOfCheckbox = checkboxes[i].getAttribute('data-day-and-time'); 
 
 		// This compares the clicked or selected element's 'data-day-and-time'
 		// with all others on the list and disables any checkbox that 
@@ -116,19 +120,32 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 		// all other boxes able to be selected as long as they do not conflict.
 		// If an element is unselected then it allows the other ones that were 
 		// conficting to now be chosen.
-		
+
 		if ( clickedTime === typeOfCheckbox && selected !== checkboxes[i] ) {
 			if ( selected.checked ) {
 				checkboxes[i].disabled = true;
+				totalCost();
 			} else {
 				checkboxes[i].disabled = false;
 			}
 		}
+
+
+		// console.log(price.innerHTML);
+		// fieldset.appendChild(price);
+		// fieldset.appendChild('price');
+		// price.innerHTML = `<p>Total: ${price}</p>`;
 	}
 });
 
 
-
+function totalCost() {
+	let legend = document.querySelectorAll('legend')[2];
+	let price = checkboxes.getAttribute('data-cost');
+	let total = document.createElement('p');
+	total.innerHTML = `Total: $${price}`;
+	legend.appendChild(total);
+}
 
 	
 	
