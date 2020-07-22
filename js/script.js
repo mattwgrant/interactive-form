@@ -2,6 +2,7 @@
 const title = document.querySelector('#title');
 const design = document.querySelector('#design');
 let color = document.querySelector('#color');
+let checkboxes = document.querySelectorAll('.activities input');
 
 /*** 
 	This function selects the input with the ID of name
@@ -21,7 +22,6 @@ document.getElementById('name').focus();
 
 window.addEventListener('load', () => { 
 	document.querySelector('#other-title').hidden = true;
-	
 });
 
 /***
@@ -32,7 +32,6 @@ window.addEventListener('load', () => {
 
 window.addEventListener('load', () => { 
 	color.innerHTML = '<option>Please select a T-shirt theme</option>';
-	
 });
 
 /***
@@ -91,8 +90,42 @@ design.addEventListener('change', () => {
 	}
 }); 
 
+/***
+	This function is used to set an event listener on the activities fieldset. Passing
+	e in as the parameter and creating a variable 'selected' that equal e.target makes
+	the event fire when one of the checkboxes is selected.
+***/ 
 
+document.querySelector('.activities').addEventListener('change', (e) => {
 
+	// Set two local variables, one for the event target and one to use 
+	// later to compare the 'data-day-and-time' attributes for disabling/
+	// enabling checkboxes depending on if the time and day conflect.
+
+	let selected = e.target;
+	let clickedTime = selected.getAttribute('data-day-and-time');
+
+	// A for loop is used to run through all occurences of the checkboxes variable
+
+	for ( let i = 0; i < checkboxes.length; i++ ) {
+		let typeOfCheckbox = checkboxes[i].getAttribute('data-day-and-time');
+
+		// This compares the clicked or selected element's 'data-day-and-time'
+		// with all others on the list and disables any checkbox that 
+		// matches the sslected checkbox's 'data-day-and-time' and leaves
+		// all other boxes able to be selected as long as they do not conflict.
+		// If an element is unselected then it allows the other ones that were 
+		// conficting to now be chosen.
+		
+		if ( clickedTime === typeOfCheckbox && selected !== checkboxes[i] ) {
+			if ( selected.checked ) {
+				checkboxes[i].disabled = true;
+			} else {
+				checkboxes[i].disabled = false;
+			}
+		}
+	}
+});
 
 
 
