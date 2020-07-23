@@ -1,7 +1,11 @@
-// This defines the item price as the 'data-cost attribute defined
+
+
+
+	function totalCost() {
+	// This defines the item price as the 'data-cost attribute defined
 	// in each checkbox element. Using parseInt turns the string into a
 	// numerical value that can be added to the 'total' variable
-	const price = parseInt(e.target.getAttribute('data-cost'));
+	// const price = parseInt(checkboxes.getAttribute('data-cost'));
 	// This sets the total at zero to start
 	let total = 0;
 
@@ -14,3 +18,13 @@
 	// Appends the displayTotal span to the legend
 	legend.appendChild(displayTotal);
 	// A for loop is used to run through all occurences of the checkboxes variable
+	for ( let i = 0; i < checkboxes.length; i++ ) {
+		const price = parseInt(checkboxes[i].getAttribute('data-cost'));
+		if ( checkboxes[i].checked ) {
+			total += price;
+		} else {
+			total -= price;
+		}
+	}
+	return total;
+}

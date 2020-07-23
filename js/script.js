@@ -1,9 +1,9 @@
 // Global variables
 const title = document.querySelector('#title');
 const design = document.querySelector('#design');
-let color = document.querySelector('#color');
-let checkboxes = document.querySelectorAll('.activities input');
-
+const color = document.querySelector('#color');
+const checkboxes = document.querySelectorAll('.activities input');
+const paymentType = document.querySelector('#payment');
 /*** 
 	This function selects the input with the ID of name
 	and puts the focus there so that the user can start 
@@ -23,6 +23,18 @@ document.getElementById('name').focus();
 window.addEventListener('load', () => { 
 	document.querySelector('#other-title').hidden = true;
 });
+
+/***
+	This hides all payment options except for credit card on load. It also
+	sets the Select Payment Method drop down option to disabled so that it
+	cannot be chosen.
+***/
+
+window.addEventListener('load', () => {
+	document.querySelector('#paypal').hidden = true;
+	document.querySelector('#bitcoin').hidden = true;
+	document.querySelector('option[value="select method"]').setAttribute('disabled', true);
+})
 
 /***
 	This listener sets the default drop down selection on load to 
@@ -174,5 +186,32 @@ For all items that are selected, add their prices to the total and then
 display the total at the bottom of the 'activities' fieldset. Do I need 
 to get the value of the data cost to add it? Or to integer?
 ***/
+
+/***
+	This event listener hides the DIVs of the payment types depending on what
+	method has been selected. It uses the variable paymentType, which selects the 
+	element with the ID of payment and checks to see what its value attribute is,
+	which is found in the option element of its child.
+***/
+
+paymentType.addEventListener('change', () => {
+
+	if ( paymentType.value === 'credit card') {
+		document.querySelector('#credit-card').hidden = false;
+		document.querySelector('#paypal').hidden = true;
+		document.querySelector('#bitcoin').hidden = true;
+	} else if (paymentType.value === 'paypal') {
+		document.querySelector('#credit-card').hidden = true;
+		document.querySelector('#paypal').hidden = false;
+		document.querySelector('#bitcoin').hidden = true;
+	} else if (paymentType.value === 'bitcoin') {
+		document.querySelector('#credit-card').hidden = true;
+		document.querySelector('#paypal').hidden = true;
+		document.querySelector('#bitcoin').hidden = false;
+	}	else {
+		
+	}
+
+})
 	
 	
