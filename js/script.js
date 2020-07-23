@@ -104,16 +104,32 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 
 	let selected = e.target;
 	let clickedTime = selected.getAttribute('data-day-and-time');
+	
+	// This defines the item price as the 'data-cost attribute defined
+	// in each checkbox element. Using parseInt turns the string into a
+	// numerical value that can be added to the 'total' variable
+	const price = parseInt(e.target.getAttribute('data-cost'));
+	// This sets the total at zero to start
+	let total = 0;
 
+	// This selects the legend element for the activities section
+	const legend = document.querySelector('fieldset[class="activities"]');
+	// This creates a span element to display the total price
+	const displayTotal = document.createElement('SPAN')
+	// Here we set the text content so that it displays properly
+	displayTotal.textContent = `Total: $${total}`;
+	// Appends the displayTotal span to the legend
+	legend.appendChild(displayTotal);
 	// A for loop is used to run through all occurences of the checkboxes variable
+	
 
 	for ( let i = 0; i < checkboxes.length; i++ ) {
 
 		// This gets the 'data-day-and-time' of all elements that are defined
 		// in the checkboxes variable
-
-		let typeOfCheckbox = checkboxes[i].getAttribute('data-day-and-time'); 
-
+		let typeOfCheckbox = checkboxes[i].getAttribute('data-day-and-time');
+		
+		
 		// This compares the clicked or selected element's 'data-day-and-time'
 		// with all others on the list and disables any checkbox that 
 		// matches the sslected checkbox's 'data-day-and-time' and leaves
@@ -124,28 +140,40 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 		if ( clickedTime === typeOfCheckbox && selected !== checkboxes[i] ) {
 			if ( selected.checked ) {
 				checkboxes[i].disabled = true;
-				totalCost();
+				total += price;
+				
 			} else {
 				checkboxes[i].disabled = false;
+				total -= price;
+				
 			}
+			const legend = document.querySelector('fieldset[class="activities"]');
+			const displayTotal = document.createElement('SPAN')
+			displayTotal.textContent = `Total: $${total}`;
+			legend.appendChild(displayTotal);
+			
+			
 		}
 
-
-		// console.log(price.innerHTML);
-		// fieldset.appendChild(price);
-		// fieldset.appendChild('price');
-		// price.innerHTML = `<p>Total: ${price}</p>`;
+		
 	}
+			
 });
 
 
-function totalCost() {
-	let legend = document.querySelectorAll('legend')[2];
-	let price = checkboxes.getAttribute('data-cost');
-	let total = document.createElement('p');
-	total.innerHTML = `Total: $${price}`;
-	legend.appendChild(total);
-}
+// function totalCost() {
+// 	let legend = document.querySelectorAll('legend')[2];
+// 	let price = checkboxes.getAttribute('data-cost');
+// 	let total = document.createElement('p');
+// 	total.innerHTML = `Total: $${price}`;
+// 	legend.appendChild(total);
+// }
 
+
+/***
+For all items that are selected, add their prices to the total and then
+display the total at the bottom of the 'activities' fieldset. Do I need 
+to get the value of the data cost to add it? Or to integer?
+***/
 	
 	
