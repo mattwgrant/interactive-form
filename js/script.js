@@ -105,24 +105,13 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 	let selected = e.target;
 	let clickedTime = selected.getAttribute('data-day-and-time');
 	
-	// This defines the item price as the 'data-cost attribute defined
-	// in each checkbox element. Using parseInt turns the string into a
-	// numerical value that can be added to the 'total' variable
-	const price = parseInt(e.target.getAttribute('data-cost'));
-	// This sets the total at zero to start
-	let total = 0;
-
-	// This selects the legend element for the activities section
-	const legend = document.querySelector('fieldset[class="activities"]');
-	// This creates a span element to display the total price
-	const displayTotal = document.createElement('SPAN')
-	// Here we set the text content so that it displays properly
-	displayTotal.textContent = `Total: $${total}`;
-	// Appends the displayTotal span to the legend
-	legend.appendChild(displayTotal);
-	// A for loop is used to run through all occurences of the checkboxes variable
+	
 	
 
+	
+	
+	
+	// A for loop is used to run through all occurences of the checkboxes variable
 	for ( let i = 0; i < checkboxes.length; i++ ) {
 
 		// This gets the 'data-day-and-time' of all elements that are defined
@@ -138,6 +127,28 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 		// conficting to now be chosen.
 
 		if ( clickedTime === typeOfCheckbox && selected !== checkboxes[i] ) {
+
+			// This sets the total at zero to start
+			let total = 0;
+			// This defines the item price as the 'data-cost attribute defined
+			// in each checkbox element. Using parseInt turns the string into a
+			// numerical value that can be added to the 'total' variable
+			const price = parseInt(selected.getAttribute('data-cost'));
+			// This selects the legend element for the activities section
+			const legend = document.querySelector('fieldset[class="activities"]');
+			// This creates a span element to display the total price
+			const displayTotal = document.createElement('SPAN')
+			// Here we set the text content so that it displays properly
+			displayTotal.textContent = `Total: $${total}`;
+			// Appends the displayTotal span to the legend
+			legend.appendChild(displayTotal);
+			
+			console.log(price);	
+
+			// This checks to see if a box is selected. if it is, it will
+			// disable any other checkbox that has a the same time and date
+			// as the selected one. If it is not checked or the check is
+			// removed, it makes the corresponding checkboxes active
 			if ( selected.checked ) {
 				checkboxes[i].disabled = true;
 				total += price;
@@ -147,27 +158,11 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 				total -= price;
 				
 			}
-			const legend = document.querySelector('fieldset[class="activities"]');
-			const displayTotal = document.createElement('SPAN')
-			displayTotal.textContent = `Total: $${total}`;
-			legend.appendChild(displayTotal);
-			
-			
 		}
-
-		
-	}
-			
+	}	
 });
 
 
-// function totalCost() {
-// 	let legend = document.querySelectorAll('legend')[2];
-// 	let price = checkboxes.getAttribute('data-cost');
-// 	let total = document.createElement('p');
-// 	total.innerHTML = `Total: $${price}`;
-// 	legend.appendChild(total);
-// }
 
 
 /***
