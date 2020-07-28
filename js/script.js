@@ -80,10 +80,15 @@ title.addEventListener('change', () => {
 
 design.addEventListener('change', () => {
 
+
+	const selectTheme = document.querySelectorAll('#design option')[0];
+	selectTheme.style.display = 'none';
+
 	// If the value of design matches 'js puns', the inner HTML changes to 
 	// display the color for that shirt design and will not display any other
 	// color options. The different colors are all placed together by appending 
 	// each one to the next
+
 
 	if ( design.value === 'js puns' ) {
 		color.innerHTML = `<option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>`;
@@ -167,7 +172,6 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 				// total global variable
 				// total -= price;
 			}
-
 		}  
 	}
 
