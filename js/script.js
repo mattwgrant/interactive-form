@@ -4,6 +4,11 @@ const design = document.querySelector('#design');
 const color = document.querySelector('#color');
 const checkboxes = document.querySelectorAll('.activities input');
 const paymentType = document.querySelector('#payment');
+// This creates a span element to display the total price
+	const displayTotal = document.createElement('SPAN');
+// This sets the total at zero to start
+	let total = 0;
+
 /*** 
 	This function selects the input with the ID of name
 	and puts the focus there so that the user can start 
@@ -118,8 +123,6 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 	const clickedTime = selected.getAttribute('data-day-and-time');
 	
 	
-	// This sets the total at zero to start
-	let total = 0;
 	// This defines the item price as the 'data-cost attribute defined
 	// in each checkbox element. Using parseInt turns the string into a
 	// numerical value that can be added to the 'total' variable
@@ -127,7 +130,7 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 	
 	
 	
-	console.log(price);	
+	console.log(clickedTime);	
 
 	
 	
@@ -159,19 +162,35 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 			// removed, it makes the corresponding checkboxes active
 			if ( selected.checked ) {
 				checkboxes[i].disabled = true;
+				// If the item is selected, its price is added to the total
+				// global variable
 				total = total + price;
 				
 			} else {
 				checkboxes[i].disabled = false;
+				// If the item is unselected, its price is subtracted from the
+				// total global variable
 				total = total - price;
 				
 			}
+
+		}  else if ( clickedTime !== typeOfCheckbox && selected !== checkboxes[i] ) {
+				if ( selected.checked ) {
+					
+					total += price;
+					break;
+				} 
+				else {
+					
+					total -= price;
+					break;
+				}
 		}
-	}	
+	}
+
 	// This selects the legend element for the activities section
 	const legend = document.querySelector('fieldset[class="activities"]');
-	// This creates a span element to display the total price
-	const displayTotal = document.createElement('SPAN')
+	
 	// Here we set the text content so that it displays properly
 	displayTotal.textContent = `Total: $${total}`;
 	// Appends the displayTotal span to the legend
