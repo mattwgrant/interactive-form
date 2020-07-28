@@ -5,9 +5,9 @@ const color = document.querySelector('#color');
 const checkboxes = document.querySelectorAll('.activities input');
 const paymentType = document.querySelector('#payment');
 // This creates a span element to display the total price
-	const displayTotal = document.createElement('SPAN');
+const displayTotal = document.createElement('SPAN');
 // This sets the total at zero to start
-	let total = 0;
+let total = 0;
 
 /*** 
 	This function selects the input with the ID of name
@@ -130,7 +130,7 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 	
 	
 	
-	console.log(clickedTime);	
+	console.log(selected);	
 
 	
 	
@@ -142,7 +142,6 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 		// in the checkboxes variable
 		const typeOfCheckbox = checkboxes[i].getAttribute('data-day-and-time');
 		
-		
 		// This compares the clicked or selected element's 'data-day-and-time'
 		// with all others on the list and disables any checkbox that 
 		// matches the sslected checkbox's 'data-day-and-time' and leaves
@@ -150,11 +149,7 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 		// If an element is unselected then it allows the other ones that were 
 		// conficting to now be chosen.
 
-
-
 		if ( clickedTime === typeOfCheckbox && selected !== checkboxes[i] ) {
-
-			
 
 			// This checks to see if a box is selected. if it is, it will
 			// disable any other checkbox that has a the same time and date
@@ -164,28 +159,28 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 				checkboxes[i].disabled = true;
 				// If the item is selected, its price is added to the total
 				// global variable
-				total = total + price;
+				// total += price;
 				
 			} else {
 				checkboxes[i].disabled = false;
 				// If the item is unselected, its price is subtracted from the
 				// total global variable
-				total = total - price;
-				
+				// total -= price;
 			}
 
-		}  else if ( clickedTime !== typeOfCheckbox && selected !== checkboxes[i] ) {
-				if ( selected.checked ) {
-					
-					total += price;
-					break;
-				} 
-				else {
-					
-					total -= price;
-					break;
-				}
-		}
+		}  
+	}
+
+	// This conditional states that if a box is selected, the program will add the price
+	// to the total. If it is unselected, it will subtract the price. This is outside of
+	// of the for loop because if placed inside, it will add the total of the checked 
+	// box as many times as the loop has items
+	if ( selected.checked ) {
+		total += price;
+		
+	} else {
+		total -= price;
+
 	}
 
 	// This selects the legend element for the activities section

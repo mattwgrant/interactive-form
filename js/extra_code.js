@@ -28,3 +28,5 @@
 	}
 	return total;
 }
+
+clickedTime !== typeOfCheckbox || clickedTime === null && 
