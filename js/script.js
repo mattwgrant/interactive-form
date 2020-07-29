@@ -249,11 +249,17 @@ paymentType.addEventListener('change', () => {
 ***/
 function validateName() {
 	let nameValue = name.value;
+	let alert = document.createElement('SPAN');
+	alert.style.display = 'block'
+	alert.textContent = 'Please enter your full name';
+	alert.style.color = 'red';
+	let label = document.querySelector('label[for="name"]');
 	if ( nameValue.length > 0 ) {
 		name.style.borderColor = 'green';
 		return true;
 	} else {
 		name.style.borderColor = 'red';
+		label.appendChild(alert)
 		return false;
 	}
 }
@@ -269,17 +275,16 @@ function validateEmail() {
 	let alert = document.createElement('SPAN');
 	alert.style.display = 'block'
 	alert.textContent = 'Please enter a valid email address';
-	alert.color = 'red';
+	alert.style.color = 'red';
 	let label = document.querySelector('label[for="mail"]');
 	    
 	if ( indexOfAt > 1 && indexOfLastPeriod > (indexOfAt + 1) ) {
 		email.style.borderColor = 'green';
+		label.removeChild(label.lastElementChild);
 		return true;
 	} else {
 		email.style.borderColor = 'red';
-		
 		label.appendChild(alert);
-
 		return false;
 	}
 }
@@ -332,7 +337,7 @@ form.addEventListener('submit', (e) => {
 	validateName();
 	validateEmail();
 	validateActivities();
-	// validatePaymentInfo();
+	validatePaymentInfo();
 
 	// If any of the functions are run and return false, 
 	// the form's default behavior (submitting) is stopped
