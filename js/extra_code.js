@@ -34,3 +34,6 @@ clickedTime !== typeOfCheckbox || clickedTime === null &&
 const selectTheme = document.querySelectorAll('#design option')[0];
 	selectTheme.style.display = 'none';
 	// trying to figure out how to hide drop down options on change event
+
+
+	if ( [A-Za-z0-9]+)

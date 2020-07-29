@@ -6,8 +6,13 @@ const checkboxes = document.querySelectorAll('.activities input');
 const paymentType = document.querySelector('#payment');
 // This creates a span element to display the total price
 const displayTotal = document.createElement('SPAN');
+const name = document.querySelector('#name');
+const email = document.querySelector('#mail');
+const activitiesList = document.querySelectorAll('.activities input');
+const activitiesContainer = document.querySelector('.activities');
 // This sets the total at zero to start
 let total = 0;
+const form = document.querySelector('form');
 
 /*** 
 	This function selects the input with the ID of name
@@ -137,13 +142,6 @@ document.querySelector('.activities').addEventListener('change', (e) => {
 	// numerical value that can be added to the 'total' variable
 	const price = parseInt(selected.getAttribute('data-cost'));
 	
-	
-	
-	console.log(selected);	
-
-	
-	
-	
 	// A for loop is used to run through all occurences of the checkboxes variable
 	for ( let i = 0; i < checkboxes.length; i++ ) {
 
@@ -238,6 +236,99 @@ paymentType.addEventListener('change', () => {
 		
 	}
 
-})
+});
+
+
+/***
+  FORM FIELD VALIDATION FUNCTIONS
+***/
+
+/***
+	This uses a conditional verify that there is more
+	than zero characters in the name form field
+***/
+function validateName() {
+	let nameValue = name.value;
+	if ( nameValue.length > 0 ) {
+		name.style.borderColor = 'green';
+		return true;
+	} else {
+		name.style.borderColor = 'red';
+		return false;
+	}
+}
+
+/***
+	This uses a conditional verify that the email address has at least
+	two characters before the @ and at least one between the @ and the last period
+***/
+function validateEmail() {
+	let emailValue = email.value;
+	let indexOfAt = emailValue.indexOf('@');
+	let indexOfLastPeriod = emailValue.lastIndexOf('.');
+	    
+	if ( indexOfAt > 1 && indexOfLastPeriod > (indexOfAt + 1) ) {
+		email.style.borderColor = 'green';
+		return true;
+	} else {
+		email.style.borderColor = 'red';
+		return false;
+	}
+}
+
+
+/***
+	This function checks to see that at least one activity has been selected
+	by looping through the list of options and then using a conditional to 
+	ensure that the list is not completely unchecked
+***/
+function validateActivities() {
+	for ( let i = 0; i < activitiesList.length; i++ ) {
+		if ( activitiesList[i].checked.length < 0 ) {
+			activitiesContainer.style.borderColor = 'green';
+			return true;
+		} else {
+			activitiesContainer.style.color = 'red';
+			return false;
+		}
+	}
+}
+
+// function validatePaymentInfo() {
+	
+// }
+
+/***
+	Event listener called on the form when it is submitted
+	calls all of the above validation functions to check 
+	that every field is filled out properly before submission
+	is allowed to go through. 
+***/
+
+form.addEventListener('submit', (e) => {
+	validateName();
+	validateEmail();
+	validateActivities();
+	// validatePaymentInfo();
+
+	// If any of the functions are run and return false, 
+	// the form's default behavior (submitting) is stopped
+	if ( !validateName() ) {
+		e.preventDefault();
+	}
+
+	if ( !validateEmail() ) {
+		e.preventDefault();
+	}
+
+	if ( !validateActivities() ) {
+		e.preventDefault();
+	}
+
+	// if ( !validatePaymentInfo() ) {
+	// 	e.preventDefault();
+	// }
+
+});
 	
 	
