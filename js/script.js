@@ -22,11 +22,13 @@ document.getElementById('name').focus();
 	This listener uses querySelector to get the input
 	element that is only to be present if 'Other' is
 	selected from the Job Role dropdown and set it to
-	be hidden when the page loads
+	be hidden when the page loads. Also disables the ability
+	to select 'Select Theme' from the tshirt drop down
 ***/
 
 window.addEventListener('load', () => { 
 	document.querySelector('#other-title').hidden = true;
+	document.querySelector('#design option').setAttribute('disabled', true);
 });
 
 /***
@@ -80,9 +82,11 @@ title.addEventListener('change', () => {
 
 design.addEventListener('change', () => {
 
-
-	const selectTheme = document.querySelectorAll('#design option')[0];
-	selectTheme.style.display = 'none';
+	// Hides option to choose Select Theme from drop down once menu is
+	// clicked on and only displays actual shirt designs
+	let shirtOption = document.querySelector('#design option');
+	shirtOption.hidden = true;
+	
 
 	// If the value of design matches 'js puns', the inner HTML changes to 
 	// display the color for that shirt design and will not display any other
@@ -213,6 +217,10 @@ to get the value of the data cost to add it? Or to integer?
 ***/
 
 paymentType.addEventListener('change', () => {
+	// hides drop down option for Please Select Theme after drop down
+	// has been selected
+	let paymentMethod = document.querySelector('option[value="select method"]');
+	paymentMethod.hidden = true;
 
 	if ( paymentType.value === 'credit card') {
 		document.querySelector('#credit-card').hidden = false;
