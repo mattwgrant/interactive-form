@@ -9,7 +9,7 @@ const displayTotal = document.createElement('SPAN');
 const name = document.querySelector('#name');
 const email = document.querySelector('#mail');
 const activitiesList = document.querySelectorAll('.activities input');
-const activitiesContainer = document.querySelector('.activities');
+const activitiesContainer = document.querySelector('.activities legend');
 // This sets the total at zero to start
 let total = 0;
 const form = document.querySelector('form');
@@ -220,15 +220,15 @@ paymentType.addEventListener('change', () => {
 	let paymentMethod = document.querySelector('option[value="select method"]');
 	paymentMethod.hidden = true;
 
-	if ( paymentType.value === 'credit card') {
+	if ( paymentType.value === 'credit card' ) {
 		document.querySelector('#credit-card').hidden = false;
 		document.querySelector('#paypal').hidden = true;
 		document.querySelector('#bitcoin').hidden = true;
-	} else if (paymentType.value === 'paypal') {
+	} else if ( paymentType.value === 'paypal' ) {
 		document.querySelector('#credit-card').hidden = true;
 		document.querySelector('#paypal').hidden = false;
 		document.querySelector('#bitcoin').hidden = true;
-	} else if (paymentType.value === 'bitcoin') {
+	} else if ( paymentType.value === 'bitcoin' ) {
 		document.querySelector('#credit-card').hidden = true;
 		document.querySelector('#paypal').hidden = true;
 		document.querySelector('#bitcoin').hidden = false;
@@ -266,12 +266,20 @@ function validateEmail() {
 	let emailValue = email.value;
 	let indexOfAt = emailValue.indexOf('@');
 	let indexOfLastPeriod = emailValue.lastIndexOf('.');
+	let alert = document.createElement('SPAN');
+	alert.style.display = 'block'
+	alert.textContent = 'Please enter a valid email address';
+	alert.color = 'red';
+	let label = document.querySelector('label[for="mail"]');
 	    
 	if ( indexOfAt > 1 && indexOfLastPeriod > (indexOfAt + 1) ) {
 		email.style.borderColor = 'green';
 		return true;
 	} else {
 		email.style.borderColor = 'red';
+		
+		label.appendChild(alert);
+
 		return false;
 	}
 }
@@ -280,23 +288,38 @@ function validateEmail() {
 /***
 	This function checks to see that at least one activity has been selected
 	by looping through the list of options and then using a conditional to 
-	ensure that the list is not completely unchecked
+	ensure that the list is not completely unchecked. 
 ***/
 function validateActivities() {
 	for ( let i = 0; i < activitiesList.length; i++ ) {
-		if ( activitiesList[i].checked.length < 0 ) {
+		if ( activitiesList[i].checked ) {
 			activitiesContainer.style.borderColor = 'green';
 			return true;
-		} else {
-			activitiesContainer.style.color = 'red';
+		} 
+	}
+	// What would be the 'else' statement is outside of the loop because if not 
+	// placed there, all boxes must be checked for the condition to return true 
+	// and we only need one to be checked.
+	activitiesContainer.style.borderColor = 'red';
+	return false;
+}
+
+function validatePaymentInfo() {
+	const creditCardNumber = document.querySelector('#cc-num').value;
+	const ccRegex = /[0-9]{13,16}/;
+	const zip = document.querySelector('#zip').value;
+	const cvv = document.querySelector('#cvv').value;
+	if ( paymentType.value === 'credit card' ) {
+		if ( creditCardNumber == ccRegex ) {
+			alert('You did it!');
+			return true;
+		} 
+	else {
+			alert('Well fuck me');
 			return false;
 		}
 	}
 }
-
-// function validatePaymentInfo() {
-	
-// }
 
 /***
 	Event listener called on the form when it is submitted
@@ -325,9 +348,9 @@ form.addEventListener('submit', (e) => {
 		e.preventDefault();
 	}
 
-	// if ( !validatePaymentInfo() ) {
-	// 	e.preventDefault();
-	// }
+	if ( !validatePaymentInfo() ) {
+		e.preventDefault();
+	}
 
 });
 	

@@ -37,3 +37,5 @@ const selectTheme = document.querySelectorAll('#design option')[0];
 
 
 	if ( [A-Za-z0-9]+)
+
+		 && zip === /[0-9]{5}/ && cvv === /[0-9]{3}/
