@@ -19,6 +19,7 @@ let total = 0;
 const form = document.querySelector('form');
 const alertName = document.createElement('SPAN');
 const alertEmail = document.createElement('SPAN');
+const alertEmailAlt = document.createElement('SPAN');
 const alertActivity = document.createElement('SPAN');
 const alertType = document.createElement('SPAN');
 const alertCard = document.createElement('SPAN');
@@ -302,6 +303,9 @@ function validateEmail() {
 	alertEmail.style.display = 'block';
 	alertEmail.textContent = 'Please enter a valid email address';
 	alertEmail.style.color = 'red';
+	alertEmailAlt.style.display = 'block';
+	alertEmailAlt.textContent = 'Email field cannot be blank';
+	alertEmailAlt.style.color = 'red';
 	let label = document.querySelector('label[for="mail"]');
 
 	// This requires at least one letter or number before a special a '.'' or '_',
@@ -317,10 +321,17 @@ function validateEmail() {
 	if ( regex.test(emailValue) === true ) {
 		email.style.borderColor = 'green';
 		alertEmail.style.display = 'none';
+		alertEmailAlt.style.display = 'none';
 		return true;
+	} else if ( emailValue === '') {
+		email.style.borderColor = 'red';
+		label.appendChild(alertEmailAlt);
+		alertEmail.style.display = 'none';
+		return false;
 	} else {
 		email.style.borderColor = 'red';
 		label.appendChild(alertEmail);
+		alertEmailAlt.style.display = 'none';
 		return false;
 	}
 }
