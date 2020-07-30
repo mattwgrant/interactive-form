@@ -39,12 +39,14 @@ document.getElementById('name').focus();
 	element that is only to be present if 'Other' is
 	selected from the Job Role dropdown and set it to
 	be hidden when the page loads. Also disables the ability
-	to select 'Select Theme' from the tshirt drop down
+	to select 'Select Theme' from the tshirt drop down. Also
+	hides the option to choose a color
 ***/
 
 window.addEventListener('load', () => { 
 	document.querySelector('#other-title').hidden = true;
 	document.querySelector('#design option').hidden = true;
+	document.querySelector('#colors-js-puns').hidden = true;
 });
 
 /***
@@ -56,7 +58,9 @@ window.addEventListener('load', () => {
 window.addEventListener('load', () => {
 	document.querySelector('#paypal').hidden = true;
 	document.querySelector('#bitcoin').hidden = true;
+	// Hides Select Method so it cannot be chosed
 	document.querySelector('option[value="select method"]').hidden = true;
+	// Set Credit Card to default option
 	document.querySelector('option[value="credit card"]').setAttribute('selected', 'selected');
 })
 
@@ -99,10 +103,6 @@ title.addEventListener('change', () => {
 
 design.addEventListener('change', () => {
 
-	// Hides option to choose Select Theme from drop down once menu is
-	// clicked on and only displays actual shirt designs
-	let shirtOption = document.querySelector('#design option');
-	shirtOption.hidden = true;
 	
 
 	// If the value of design matches 'js puns', the inner HTML changes to 
@@ -112,6 +112,9 @@ design.addEventListener('change', () => {
 
 
 	if ( design.value === 'js puns' ) {
+		// Shows the colors option drop down
+		document.querySelector('#colors-js-puns').hidden = false;
+		// Shirt colors that display with selected shirt
 		color.innerHTML = `<option value="cornflowerblue">Cornflower Blue (JS Puns shirt only)</option>`;
 		color.innerHTML += `<option value="darkslategrey">Dark Slate Grey (JS Puns shirt only)</option>`;
 		color.innerHTML += `<option value="gold">Gold (JS Puns shirt only)</option>`;
@@ -119,6 +122,9 @@ design.addEventListener('change', () => {
 		// This works the same way as the previous option but with the 'heart js' shirt
 
 	} else if ( design.value === 'heart js' ) {
+		// Shows the colors option drop down
+		document.querySelector('#colors-js-puns').hidden = false;
+		// Shirt colors that display with selected shirt
 		color.innerHTML = `<option value="tomato">Tomato (I &#9829; JS shirt only)</option>`;
 		color.innerHTML += `<option value="steelblue">Steel Blue (I &#9829; JS shirt only)</option> `;
 		color.innerHTML += `<option value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option>`;
@@ -129,7 +135,7 @@ design.addEventListener('change', () => {
 		// this option it needs to be able to change again
 
 	} else {
-		color.innerHTML = '<option>Please select a T-shirt theme</option>';
+		document.querySelector('#colors-js-puns').hidden = true;
 	}
 }); 
 
