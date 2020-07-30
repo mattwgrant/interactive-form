@@ -44,7 +44,7 @@ document.getElementById('name').focus();
 
 window.addEventListener('load', () => { 
 	document.querySelector('#other-title').hidden = true;
-	document.querySelector('#design option').setAttribute('disabled', true);
+	document.querySelector('#design option').hidden = true;
 });
 
 /***
@@ -56,7 +56,8 @@ window.addEventListener('load', () => {
 window.addEventListener('load', () => {
 	document.querySelector('#paypal').hidden = true;
 	document.querySelector('#bitcoin').hidden = true;
-	document.querySelector('option[value="select method"]').setAttribute('disabled', true);
+	document.querySelector('option[value="select method"]').hidden = true;
+	document.querySelector('option[value="credit card"]').setAttribute('selected', 'selected');
 })
 
 /***
