@@ -285,6 +285,8 @@ function validateName() {
 	}
 }
 
+
+
 /***
 	This uses a conditional verify that the email address has at least
 	two characters before the @ and at least one between the @ and the 
@@ -336,6 +338,15 @@ function validateEmail() {
 	}
 }
 
+// Email validation messages appear as soon as someone is typing
+// or if the field comes into focus. Message remains until issue
+// is corrected
+email.addEventListener('keyup', () => {
+	validateEmail();
+});
+email.addEventListener('focus', () => {
+	validateEmail();
+});
 
 /***
 	This function checks to see that at least one activity has been selected
@@ -494,7 +505,7 @@ form.addEventListener('submit', (e) => {
 	validateName();
 	validateEmail();
 	validateActivities();
-	// validatePaymentInfo();
+	validatePaymentInfo();
 
 	// If any of the functions are run and return false, 
 	// the form's default behavior (submitting) is stopped
