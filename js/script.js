@@ -380,7 +380,8 @@ function validatePaymentInfo() {
 
 	// First checks to see if the customer is paying by CC
 	if ( paymentType.value === 'credit card' ) {
-		// If they are, it checks that the CC number is valid
+		// The conditions below check for every combination of CC, zip, and CVV
+		// and display or remove alerts accordingly on submit
 		if ( ccRegex.test(creditCardNumber) === true && zipRegex.test(zipValue) === true && cvvRegex.test(cvvValue) === true ) {
 			ccNum.style.borderColor = 'green';
 			alertCard.style.display = 'none';
