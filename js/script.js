@@ -13,6 +13,9 @@ const activitiesContainer = document.querySelector('.activities legend');
 // This sets the total at zero to start
 let total = 0;
 const form = document.querySelector('form');
+const alertName = document.createElement('SPAN');
+const alertEmail = document.createElement('SPAN');
+const alertActivity = document.createElement('SPAN');
 
 /*** 
 	This function selects the input with the ID of name
@@ -245,46 +248,54 @@ paymentType.addEventListener('change', () => {
 
 /***
 	This uses a conditional verify that there is more
-	than zero characters in the name form field
+	than zero characters in the name form field. It also
+	creates and appends a span containing an error message
+	so that the user knows what they need to fix.
 ***/
 function validateName() {
 	let nameValue = name.value;
-	let alert = document.createElement('SPAN');
-	alert.style.display = 'block'
-	alert.textContent = 'Please enter your full name';
-	alert.style.color = 'red';
+	alertName.style.display = 'block';
+	alertName.textContent = 'Please enter your full name';
+	alertName.style.color = 'red';
 	let label = document.querySelector('label[for="name"]');
+
 	if ( nameValue.length > 0 ) {
 		name.style.borderColor = 'green';
+		alertName.style.display = 'none';
 		return true;
 	} else {
 		name.style.borderColor = 'red';
-		label.appendChild(alert)
+		label.appendChild(alertName)
 		return false;
 	}
 }
 
 /***
 	This uses a conditional verify that the email address has at least
-	two characters before the @ and at least one between the @ and the last period
+	two characters before the @ and at least one between the @ and the 
+	last period. It also creates and appends a span containing an error 
+	message so that the user knows what they need to fix.
 ***/
+
+
+		
+
 function validateEmail() {
 	let emailValue = email.value;
 	let indexOfAt = emailValue.indexOf('@');
 	let indexOfLastPeriod = emailValue.lastIndexOf('.');
-	let alert = document.createElement('SPAN');
-	alert.style.display = 'block'
-	alert.textContent = 'Please enter a valid email address';
-	alert.style.color = 'red';
+	alertEmail.style.display = 'block';
+	alertEmail.textContent = 'Please enter a valid email address';
+	alertEmail.style.color = 'red';
 	let label = document.querySelector('label[for="mail"]');
 	    
 	if ( indexOfAt > 1 && indexOfLastPeriod > (indexOfAt + 1) ) {
 		email.style.borderColor = 'green';
-		label.removeChild(label.lastElementChild);
+		alertEmail.style.display = 'none';
 		return true;
 	} else {
 		email.style.borderColor = 'red';
-		label.appendChild(alert);
+		label.appendChild(alertEmail);
 		return false;
 	}
 }
@@ -296,15 +307,22 @@ function validateEmail() {
 	ensure that the list is not completely unchecked. 
 ***/
 function validateActivities() {
+
 	for ( let i = 0; i < activitiesList.length; i++ ) {
 		if ( activitiesList[i].checked ) {
 			activitiesContainer.style.borderColor = 'green';
+			alertActivity.style.display = 'none';
 			return true;
 		} 
 	}
+	alertActivity.style.display = 'block';
+	alertActivity.textContent = 'Please select at least one event to attend';
+	alertActivity.style.color = 'red';
+	let label = document.querySelector('.activities legend');
 	// What would be the 'else' statement is outside of the loop because if not 
 	// placed there, all boxes must be checked for the condition to return true 
 	// and we only need one to be checked.
+	label.appendChild(alertActivity);
 	activitiesContainer.style.borderColor = 'red';
 	return false;
 }
