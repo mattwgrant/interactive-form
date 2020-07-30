@@ -1,5 +1,47 @@
 
+if ( paymentType.value === 'credit card' ) {
+		// If they are, it checks that the CC number is valid
+		if ( ccRegex.test(creditCardNumber) === true ) {
+			ccNum.style.borderColor = 'green';
+			alertCard.style.display = 'none';
+			return true
+		} else {
+			ccNum.style.borderColor = 'red';
+			cardLabel.appendChild(alertCard);
+			return false;
+		}
+				
+		// If valid it checks the zip
+		if ( zipRegex.test(zipValue) === true ) {
+			zip.style.borderColor = 'green';
+			zipLabel.style.display = 'none';
+			return true;
+		} else {
+			zip.style.borderColor = 'red';
+			zipLabel.appendChild(alertZip);
+			return false;
+		}
 
+		
+		// Finally it checks the CVV and if that is good, returns true
+		// and is validated
+		if ( cvvRegex.test(cvvValue) === true ) {
+			cvv.style.borderColor = 'green';
+			cvvLabel.style.display = 'none';
+			return true;
+			// Below are the alerts if any of the above 3 are false
+		} else {
+			cvv.style.borderColor = 'red';
+			cvvLabel.appendChild(alertCVV);
+			return false;
+		}
+	} else if (paymentType.value === 'select method') {
+		typeLabel.style.text = 'red';
+		typeLabel.appendChild(alertType);
+		return false;
+	} else {
+		return true;
+	}
 
 	function totalCost() {
 	// This defines the item price as the 'data-cost attribute defined
@@ -36,6 +78,46 @@ const selectTheme = document.querySelectorAll('#design option')[0];
 	// trying to figure out how to hide drop down options on change event
 
 
-	if ( [A-Za-z0-9]+)
+if ( paymentType.value === 'credit card' ) {
+		// If they are, it checks that the CC number is valid
+		if ( ccRegex.test(creditCardNumber) === true && zipRegex.test(zipValue) === true && cvvRegex.test(cvvValue) === true ) {
+			ccNum.style.borderColor = 'green';
+			alertCard.style.display = 'none';
+			return true
+		} else {
+			ccNum.style.borderColor = 'red';
+			cardLabel.appendChild(alertCard);
+			return false;
+		}
+				
+		// If valid it checks the zip
+		if ( zipRegex.test(zipValue) === true ) {
+			zip.style.borderColor = 'green';
+			zipLabel.style.display = 'none';
+			return true;
+		} else {
+			zip.style.borderColor = 'red';
+			zipLabel.appendChild(alertZip);
+			return false;
+		}
 
-		 && zip === /[0-9]{5}/ && cvv === /[0-9]{3}/
+		
+		// Finally it checks the CVV and if that is good, returns true
+		// and is validated
+		if ( cvvRegex.test(cvvValue) === true ) {
+			cvv.style.borderColor = 'green';
+			cvvLabel.style.display = 'none';
+			return true;
+			// Below are the alerts if any of the above 3 are false
+		} else {
+			cvv.style.borderColor = 'red';
+			cvvLabel.appendChild(alertCVV);
+			return false;
+		}
+	} else if (paymentType.value === 'select method') {
+		typeLabel.style.text = 'red';
+		typeLabel.appendChild(alertType);
+		return false;
+	} else {
+		return true;
+	}

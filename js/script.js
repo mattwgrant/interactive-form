@@ -8,6 +8,10 @@ const paymentType = document.querySelector('#payment');
 const displayTotal = document.createElement('SPAN');
 const name = document.querySelector('#name');
 const email = document.querySelector('#mail');
+const ccNum = document.querySelector('#cc-num');
+const zip = document.querySelector('#zip');
+const cvv = document.querySelector('#cvv');
+// const paymentMethod = document.querySelector('label[for="payment"]');
 const activitiesList = document.querySelectorAll('.activities input');
 const activitiesContainer = document.querySelector('.activities legend');
 // This sets the total at zero to start
@@ -16,6 +20,10 @@ const form = document.querySelector('form');
 const alertName = document.createElement('SPAN');
 const alertEmail = document.createElement('SPAN');
 const alertActivity = document.createElement('SPAN');
+const alertType = document.createElement('SPAN');
+const alertCard = document.createElement('SPAN');
+const alertZip = document.createElement('SPAN');
+const alertCVV = document.createElement('SPAN');
 
 /*** 
 	This function selects the input with the ID of name
@@ -235,9 +243,7 @@ paymentType.addEventListener('change', () => {
 		document.querySelector('#credit-card').hidden = true;
 		document.querySelector('#paypal').hidden = true;
 		document.querySelector('#bitcoin').hidden = false;
-	}	else {
-		
-	}
+	}	
 
 });
 
@@ -250,7 +256,8 @@ paymentType.addEventListener('change', () => {
 	This uses a conditional verify that there is more
 	than zero characters in the name form field. It also
 	creates and appends a span containing an error message
-	so that the user knows what they need to fix.
+	so that the user knows what they need to fix. If the error
+	appears and then is resolved, the message disappears.
 ***/
 function validateName() {
 	let nameValue = name.value;
@@ -274,7 +281,8 @@ function validateName() {
 	This uses a conditional verify that the email address has at least
 	two characters before the @ and at least one between the @ and the 
 	last period. It also creates and appends a span containing an error 
-	message so that the user knows what they need to fix.
+	message so that the user knows what they need to fix. If the error
+	appears and then is resolved, the message disappears.
 ***/
 
 
@@ -288,8 +296,18 @@ function validateEmail() {
 	alertEmail.textContent = 'Please enter a valid email address';
 	alertEmail.style.color = 'red';
 	let label = document.querySelector('label[for="mail"]');
-	    
-	if ( indexOfAt > 1 && indexOfLastPeriod > (indexOfAt + 1) ) {
+
+	// This requires at least one letter or number before a special a '.'' or '_',
+	// which are optional and then at least one more letter, number, or '.'/'_'
+	// before the '@'. Then is requires another letter or number before the final 
+	// '.' at the end of the web address, followed by at least one other letter or 
+	// number with the '$' signifying that the string must end with a letter or number
+	const regex = /[A-Za-z0-9]+[.|_]?[A-Za-z0-9._]+[@][A-Za-z0-9]+[.][A-Za-z0-9]+$/; 
+	
+	// The conditional tests to see if the value entered into the email form field,
+	// found in the variable 'emailValue', matches the parameters set in the regex
+	// variable 
+	if ( regex.test(emailValue) === true ) {
 		email.style.borderColor = 'green';
 		alertEmail.style.display = 'none';
 		return true;
@@ -327,20 +345,122 @@ function validateActivities() {
 	return false;
 }
 
+/***
+	This functionis used to determine if the customer is paying by CC and if so,
+	validating that the CC number, zip, adn CVV are the proper characters and the
+	proper amount of characters
+***/
+
 function validatePaymentInfo() {
-	const creditCardNumber = document.querySelector('#cc-num').value;
+	// Get the values of the input field to compare to regex
+	const creditCardNumber = ccNum.value;
+	const zipValue = zip.value;
+	const cvvValue = cvv.value;
+	// Set the regex values for each field
 	const ccRegex = /[0-9]{13,16}/;
-	const zip = document.querySelector('#zip').value;
-	const cvv = document.querySelector('#cvv').value;
+	const zipRegex = /[0-9]{5}/;
+	const cvvRegex = /[0-9]{3}/;
+	// Styling for each alert
+	alertCard.style.display = 'block';
+	alertCard.textContent = 'Please enter a valid credit card number';
+	alertCard.style.color = 'red';
+	const cardLabel = document.querySelector('.col-6');
+	alertZip.style.display = 'block';
+	alertZip.textContent = 'Please enter your 5 digit zip code';
+	alertZip.style.color = 'red';
+	const zipLabel = document.querySelector('.col-3');
+	alertCVV.style.display = 'block';
+	alertCVV.textContent = 'Please enter your 3 digit CVV';
+	alertCVV.style.color = 'red';
+	const cvvLabel = document.querySelectorAll('.col-3')[1];
+	alertType.style.display = 'block';
+	alertType.textContent = 'Please select a payment type';
+	alertType.style.color = 'red';
+	const typeLabel = document.querySelector('label[for="payment"]');
+
+	// First checks to see if the customer is paying by CC
 	if ( paymentType.value === 'credit card' ) {
-		if ( creditCardNumber == ccRegex ) {
-			alert('You did it!');
+		// If they are, it checks that the CC number is valid
+		if ( ccRegex.test(creditCardNumber) === true && zipRegex.test(zipValue) === true && cvvRegex.test(cvvValue) === true ) {
+			ccNum.style.borderColor = 'green';
+			alertCard.style.display = 'none';
+			zip.style.borderColor = 'green';
+			alertZip.style.display = 'none';
+			cvv.style.borderColor = 'green';
+			alertCVV.style.display = 'none';
+			alertType.style.display = 'none';
 			return true;
-		} 
-	else {
-			alert('Well fuck me');
+		} else if (ccRegex.test(creditCardNumber) === true && zipRegex.test(zipValue) === false && cvvRegex.test(cvvValue) === false ) {
+			ccNum.style.borderColor = 'green';
+			alertCard.style.display = 'none';
+			zip.style.borderColor = 'red';
+			zipLabel.appendChild(alertZip);
+			cvv.style.borderColor = 'red';
+			cvvLabel.appendChild(alertCVV);
+			alertType.style.display = 'none';
+			return false;
+		} else if (ccRegex.test(creditCardNumber) === false && zipRegex.test(zipValue) === true && cvvRegex.test(cvvValue) === false ) {
+			ccNum.style.borderColor = 'red';
+			cardLabel.appendChild(alertCard);
+			zip.style.borderColor = 'green';
+			alertZip.style.display = 'none';
+			cvv.style.borderColor = 'red';
+			cvvLabel.appendChild(alertCVV);
+			alertType.style.display = 'none';
+			return false;
+		} else if (ccRegex.test(creditCardNumber) === false && zipRegex.test(zipValue) === false && cvvRegex.test(cvvValue) === true) {
+			ccNum.style.borderColor = 'red';
+			cardLabel.appendChild(alertCard);
+			zip.style.borderColor = 'red';
+			zipLabel.appendChild(alertZip);
+			cvv.style.borderColor = 'green';
+			alertCVV.style.display = 'none';
+			alertType.style.display = 'none';
+			return false;
+		} else if (ccRegex.test(creditCardNumber) === false && zipRegex.test(zipValue) === true && cvvRegex.test(cvvValue) === true ) {
+			ccNum.style.borderColor = 'red';
+			cardLabel.appendChild(alertCard);
+			zip.style.borderColor = 'green';
+			alertZip.style.display = 'none';
+			cvv.style.borderColor = 'green';
+			alertCVV.style.display = 'none';
+			alertType.style.display = 'none';
+			return false;
+		} else if (ccRegex.test(creditCardNumber) === true && zipRegex.test(zipValue) === false && cvvRegex.test(cvvValue) === true ) {
+			ccNum.style.borderColor = 'green';
+			alertCard.style.display = 'none';
+			zip.style.borderColor = 'red';
+			zipLabel.appendChild(alertZip);
+			cvv.style.borderColor = 'green';
+			alertCVV.style.display = 'none';
+			alertType.style.display = 'none';
+			return false;
+		} else if (ccRegex.test(creditCardNumber) === true && zipRegex.test(zipValue) === true && cvvRegex.test(cvvValue) === false ) {
+			ccNum.style.borderColor = 'green';
+			alertCard.style.display = 'none';
+			zip.style.borderColor = 'green';
+			alertZip.style.display = 'none';
+			cvv.style.borderColor = 'red';
+			alertType.style.display = 'none';
+			cvvLabel.appendChild(alertCVV);
+			return false;
+		} else {
+			ccNum.style.borderColor = 'red';
+			cardLabel.appendChild(alertCard);
+			zip.style.borderColor = 'red';
+			zipLabel.appendChild(alertZip);
+			cvv.style.borderColor = 'red';
+			cvvLabel.appendChild(alertCVV);
+			alertType.style.display = 'none';
 			return false;
 		}
+	} else if ( paymentType.value === 'select method') {
+		// typeLabel.style.text = 'red';
+		typeLabel.appendChild(alertType);
+		return false;
+	} else {
+		alertType.style.display = 'none';
+		return true
 	}
 }
 
@@ -355,7 +475,7 @@ form.addEventListener('submit', (e) => {
 	validateName();
 	validateEmail();
 	validateActivities();
-	validatePaymentInfo();
+	// validatePaymentInfo();
 
 	// If any of the functions are run and return false, 
 	// the form's default behavior (submitting) is stopped
