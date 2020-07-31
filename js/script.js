@@ -62,7 +62,7 @@ window.addEventListener('load', () => {
 	// Hides Select Method so it cannot be chosed
 	document.querySelector('option[value="select method"]').hidden = true;
 	// Set Credit Card to default option
-	document.querySelector('option[value="credit card"]').setAttribute('selected', 'selected');
+	document.querySelector('option[value="credit card"]').selected = true;
 })
 
 /***
