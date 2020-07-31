@@ -48,6 +48,7 @@ window.addEventListener('load', () => {
 	document.querySelector('#other-title').hidden = true;
 	document.querySelector('#design option').hidden = true;
 	document.querySelector('#colors-js-puns').hidden = true;
+	document.querySelector('#design option').setAttribute('disabled', true)
 });
 
 /***
@@ -61,6 +62,7 @@ window.addEventListener('load', () => {
 	document.querySelector('#bitcoin').hidden = true;
 	// Hides Select Method so it cannot be chosed
 	document.querySelector('option[value="select method"]').hidden = true;
+	document.querySelector('option[value="select method"]').setAttribute('disabled', true);
 	// Set Credit Card to default option
 	document.querySelector('option[value="credit card"]').selected = true;
 })
@@ -106,7 +108,7 @@ design.addEventListener('change', () => {
 
 	// hides 'select theme' option after clicking dropdown
 	let shirtOption = document.querySelector('option[value="select method"]');
-	shirtOption.hidden = true;
+	shirtOption.style.visibility = 'hidden';
 
 	// If the value of design matches 'js puns', the inner HTML changes to 
 	// display the color for that shirt design and will not display any other
