@@ -104,6 +104,7 @@ title.addEventListener('change', () => {
 
 design.addEventListener('change', () => {
 
+	// hides 'select theme' option after clicking dropdown
 	let shirtOption = document.querySelector('option[value="select method"]');
 	shirtOption.hidden = true;
 
