@@ -104,7 +104,8 @@ title.addEventListener('change', () => {
 
 design.addEventListener('change', () => {
 
-	
+	let shirtOption = document.querySelector('option[value="select method"]');
+	shirtOption.hidden = true;
 
 	// If the value of design matches 'js puns', the inner HTML changes to 
 	// display the color for that shirt design and will not display any other
