@@ -1,0 +1,1 @@
+This project uses JS to make the form interactive. Using regex, event listeners, and functions is ensures that the form is validated properly before it allows the user to submit it.
